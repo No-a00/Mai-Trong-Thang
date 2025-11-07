@@ -1,0 +1,58 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build",
+      "type": "shell",
+      "command": "C:/msys64/mingw64/bin/g++.exe",
+      "args": [
+        "main.cpp",
+        "-o", "app.exe",
+        "-I", "${workspaceFolder}/opencv/include",
+        "-L", "${workspaceFolder}/opencv/x64/mingw/lib",
+        "-lopencv_core455",
+        "-lopencv_imgproc455",
+        "-lopencv_highgui455",
+        "-lopencv_imgcodecs455",
+        "-lopencv_videoio455"
+      ],
+      "group": "build",
+      "problemMatcher": ["$gcc"],
+      "detail": "Build OpenCV project in portable mode"
+    },
+
+    {
+      "label": "Copy DLLs",
+      "type": "shell",
+      "command": "cmd",
+      "args": [
+        "/c",
+        "copy \"${workspaceFolder}\\dlls\\*.dll\" \"${workspaceFolder}\""
+      ]
+    },
+
+    {
+      "label": "Run",
+      "type": "shell",
+      "command": "${workspaceFolder}/app.exe"
+    },
+
+    {
+      "label": "Build & Copy",
+      "dependsOn": [
+        "Build",
+        "Copy DLLs"
+      ],
+      "dependsOrder": "sequence"
+    },
+
+    {
+      "label": "Build & Run",
+      "dependsOn": [
+        "Build & Copy",
+        "Run"
+      ],
+      "dependsOrder": "sequence"
+    }
+  ]
+}
